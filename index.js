@@ -1,20 +1,22 @@
 let spectrum = null;
 let hard = false;
 
-// fetch the spectrum data
-fetch("./res/spectrum.json")
-    .then(response => {
-        spectrum = response.json();
-    });
-
 function init() {
-    // register controls
-    registerScoreButtons();
-    registerSpectrumDisplayControl();
 
-    // start the game
-    let canvasDimension = document.getElementById("canvas").getBoundingClientRect();
-    new CenterRadialSlider(canvasDimension.width, canvasDimension.height, 12);
+    // fetch the spectrum data
+    fetch("./res/spectrum.json")
+        .then(response => {
+            return response.json();
+        }).then((data) => {
+        spectrum = data;
+        // register controls
+        registerScoreButtons();
+        registerSpectrumDisplayControl();
+
+        // start the game
+        let canvasDimension = document.getElementById("canvas").getBoundingClientRect();
+        new CenterRadialSlider(canvasDimension.width, canvasDimension.height, 12);
+    });
 }
 
 function registerScoreButtons() {
