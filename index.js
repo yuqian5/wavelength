@@ -2,7 +2,7 @@ let spectrum = null;
 let hard = false;
 
 // fetch the spectrum data
-fetch("./spectrum.json")
+fetch("./res/spectrum.json")
     .then(response => {
         spectrum = response.json();
     });
