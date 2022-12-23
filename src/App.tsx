@@ -30,7 +30,7 @@ function App() {
         <>
             <Container style={{maxWidth: 1000}}>
                 <TopNavbar/>
-                <div className={"d-flex flex-column"}>
+                <div className={"d-flex flex-column mb-5"}>
                     <SpectrumPrompt/>
                     <Slider/>
                     <ScoreBoard/>
