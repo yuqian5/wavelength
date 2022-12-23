@@ -1,0 +1,23 @@
+.rotate-on-hover-90 {
+    transition: transform .7s ease-in-out;
+}
+
+.rotate-on-hover-90:hover {
+    transform: rotate(90deg);
+}
+
+.rotate-on-hover-360 {
+    transition: transform .7s ease-in-out;
+}
+
+.rotate-on-hover-360:hover {
+    transform: rotate(360deg);
+}
+
+.navbar-icon {
+    height: 23px;
+}
+
+.hover-pointer {
+    cursor: pointer;
+}

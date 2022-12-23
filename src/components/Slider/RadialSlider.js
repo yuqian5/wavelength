@@ -1,80 +1,19 @@
-let spectrum = null;
-let hard = false;
-
-function init() {
-
-    // fetch the spectrum data
-    fetch("./res/spectrum.json")
-        .then(response => {
-            return response.json();
-        }).then((data) => {
-        spectrum = data;
-        // register controls
-        registerScoreButtons();
-        registerSpectrumDisplayControl();
-
-        // start the game
-        let canvasDimension = document.getElementById("canvas").getBoundingClientRect();
-        new CenterRadialSlider(canvasDimension.width, canvasDimension.height, 12);
-    });
-}
-
-function registerScoreButtons() {
-    let score1 = document.getElementById("score1");
-    let scoreButton = document.getElementById("add-score1");
-    scoreButton.addEventListener("click", function () {
-        score1.innerText = (parseInt(score1.innerText) + 1).toString();
-    });
-    scoreButton = document.getElementById("subtract-score1");
-    scoreButton.addEventListener("click", function () {
-        score1.innerText = Math.max(parseInt(score1.innerText) - 1, 0).toString();
-    });
-
-    let score2 = document.getElementById("score2");
-    scoreButton = document.getElementById("add-score2");
-    scoreButton.addEventListener("click", function () {
-        score2.innerText = (parseInt(score2.innerText) + 1).toString();
-    });
-    scoreButton = document.getElementById("subtract-score2");
-    scoreButton.addEventListener("click", function () {
-        score2.innerText = Math.max(parseInt(score2.innerText) - 1, 0).toString();
-    });
-}
-
-function registerSpectrumDisplayControl() {
-    let spectrumLeft = document.getElementById("spectrum-left");
-    let spectrumRight = document.getElementById("spectrum-right");
-    let newCards = document.getElementById("new-cards");
-    let hardModeSelect = document.getElementById("hard-mode-select");
-
-    newCards.addEventListener("click", function () {
-        // randomly select a card from the spectrum
-        if (hard) {
-            let card = spectrum["hard"][Math.floor(Math.random() * spectrum["hard"].length)];
-            spectrumLeft.innerText = card[0];
-            spectrumRight.innerText = card[1];
-        } else {
-            let card = spectrum["hard"][Math.floor(Math.random() * spectrum["hard"].length)];
-            spectrumLeft.innerText = card[0];
-            spectrumRight.innerText = card[1];
-        }
-    });
-
-    hardModeSelect.addEventListener("change", function () {
-        hard = hardModeSelect.checked;
-        newCards.click();
-    });
-
-    newCards.click();
-}
-
 const GameDisplayMode = {
     Prompt: 0,
     Guess: 1
 };
 
-class CenterRadialSlider {
+let initialized = false;
+
+export default class RadialSlider {
     constructor(width, height, scale = 10) {
+        // make sure there is only ever one instance of this class
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
+
         this.scale = scale;
         this.trueWidth = width;
         this.trueHeight = height;
@@ -87,7 +26,7 @@ class CenterRadialSlider {
         this.centerY = 0;
         this.radius = 0;
 
-        this.calculateGameConstants()
+        this.calculateGameConstants();
 
         this.centerRedArmWidth = this.radius / 35;
 
@@ -107,11 +46,11 @@ class CenterRadialSlider {
         window.onresize = () => {
             this.calculateGameConstants();
             this.draw();
-        }
+        };
     }
 
     calculateGameConstants() {
-        let r = (Math.min(this.trueWidth, this.trueHeight) / 1.64)
+        let r = (Math.min(this.trueWidth, this.trueHeight) / 1.64);
         this.centerX = (this.trueWidth / 2) * this.scale;
         this.centerY = (r + 30) * this.scale;
         this.radius = r * this.scale;
@@ -248,12 +187,12 @@ class CenterRadialSlider {
     randomSpinWheel(enableControls) {
         let randomDegree = (Math.random() * (this.rangeMax - this.rangeMin) + this.rangeMin);
 
-
         let degreeTravelled = 0;
         let degreeTotal = (360 * 3 + (360 - this.trueValue)) + (randomDegree);
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         let self = this;
         let spin = function () {
-            let speed = Math.max(10 * (1 - (degreeTravelled / degreeTotal)), 0.1);
+            let speed = Math.max(14 * (1 - (degreeTravelled / degreeTotal)), 0.4);
 
             let angle = self.trueValue + speed;
             self.trueValue = angle % 360;
