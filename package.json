@@ -1,6 +1,7 @@
 {
   "name": "wavelength-react",
-  "version": "0.1.0",
+  "homepage": "/side-projects/wavelength/build",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
