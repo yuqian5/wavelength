@@ -1,6 +1,7 @@
 {
+  "name": "Wavelength",
   "short_name": "Wavelength",
-  "name": "I most certainly did not spend a whole day ripping off a popular board game because I was too cheap to pay $80.",
+  "description": "I most certainly did not spend a whole day ripping off a popular board game because I was too cheap to pay $80.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -33,8 +34,10 @@
     }
 
   ],
-  "start_url": ".",
+  "start_url": "/side-projects/wavelength/build/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "service_worker": "sw.js"
 }
